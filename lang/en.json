@@ -1,0 +1,10 @@
+{
+  "searchRepositoriesScreen": {
+    "title": "Search Github repositories by username",
+    "search": "Search",
+    "searchPlaceholder": "Enter username",
+    "noResults": "No results found",
+    "searching": "Searching...",
+    "searchError": "An error occurred while searching"
+  }
+}
