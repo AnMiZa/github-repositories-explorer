@@ -1,13 +1,15 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
+import { Provider as JotaiProvider } from 'jotai';
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={
-      {
-        headerShown: false,
-      }
-    }>
-      <Stack.Screen name="index" />
-    </Stack>
+    <JotaiProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="index" />
+      </Stack>
+    </JotaiProvider>
   );
 }
