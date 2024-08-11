@@ -1,25 +1,30 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { PropsWithChildren, useState } from 'react';
-import { StyleSheet, TouchableOpacity, useColorScheme, View, Text } from 'react-native';
+import { PropsWithChildren } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { Colors } from '@/constants/Colors';
 import Animated, {
+  SharedValue,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+const MAX_HEIGHT = 300;
 
-export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
+export function Collapsible({
+  children,
+  activeSectionIndex,
+  sectionIndex,
+  maxCollapsibleHeight = MAX_HEIGHT,
+}: PropsWithChildren & {
+  activeSectionIndex: SharedValue<number | null>;
+  sectionIndex: number;
+  maxCollapsibleHeight?: number;
+}) {
   const height = useSharedValue(0);
-  const isExpanded = useSharedValue(false);
-  const onPress = () => {
-    isExpanded.value = !isExpanded.value;
-  };
+
   const derivedHeight = useDerivedValue(() =>
-    withTiming(height.value * Number(isExpanded.value), {
+    withTiming(height.value * Number(activeSectionIndex.value === sectionIndex), {
       duration: 500,
     }),
   );
@@ -29,18 +34,12 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
 
   return (
     <>
-      <TouchableOpacity style={styles.heading} onPress={onPress} activeOpacity={0.8}>
-        <Text>{title}</Text>
-        <Ionicons name={isExpanded.value ? 'chevron-down' : 'chevron-forward-outline'} size={18} />
-      </TouchableOpacity>
-      <Animated.View style={[styles.animatedView, bodyStyle]}>
-        <View
-          onLayout={(e) => {
-            height.value = e.nativeEvent.layout.height;
-          }}
-          style={styles.wrapper}>
-          {children}
-        </View>
+      <Animated.View
+        style={[styles.animatedView, bodyStyle]}
+        onLayout={(_) => {
+          height.value = maxCollapsibleHeight;
+        }}>
+        <View style={[styles.wrapper, { height: maxCollapsibleHeight }]}>{children}</View>
       </Animated.View>
     </>
   );
@@ -68,8 +67,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: '100%',
-    position: 'absolute',
-    display: 'flex',
     alignItems: 'center',
+    overflow: 'hidden',
   },
 });

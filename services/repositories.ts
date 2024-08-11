@@ -1,11 +1,8 @@
+import { githubApi } from './api';
+
 export const getUsersByUsername = async (userName: string) => {
-  const data = await fetch(`https://api.github.com/search/users?q=${userName}&per_page=5`, {
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-    method: 'GET',
-  });
-  return await data.json();
+  const response = await githubApi(`search/users?q=${userName}&per_page=5`);
+  return await response.json();
 };
 
 const x = [

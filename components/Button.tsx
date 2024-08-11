@@ -1,4 +1,5 @@
-import { View, TouchableOpacity, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { Colors } from '@/constants';
 
 type ButtonProps = {
   label: string;
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 40,
     borderRadius: 6,
-    backgroundColor: '#0b5474',
+    backgroundColor: Colors.primary,
     width: '100%',
     marginVertical: 16,
   },
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   buttonLabel: {
-    color: 'white',
+    color: Colors.white,
     fontSize: 16,
   },
 });

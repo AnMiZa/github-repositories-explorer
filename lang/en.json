@@ -5,6 +5,7 @@
     "searchPlaceholder": "Enter username",
     "noResults": "No results found",
     "searching": "Searching...",
-    "searchError": "An error occurred while searching"
+    "searchError": "An error occurred while searching",
+    "userDoNotHaveRepositories": "User do not have any repositories"
   }
 }

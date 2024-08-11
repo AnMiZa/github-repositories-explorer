@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useGetUserRepositories } from '@/hooks/useGetUserRepositories';
 import { getUsersByUsername } from '@/services/repositories';
 import { useAtom } from 'jotai';
 import { usersAtom } from '@/state/users';
@@ -19,7 +18,7 @@ export const useSearchRepositoriesForm = () => {
   const { control, handleSubmit, reset, watch } = useForm<SearchRepositoriesFormValues>({
     defaultValues: formDefaultValues,
   });
-  const [_, setUsers] = useAtom(usersAtom);
+  const [, setUsers] = useAtom(usersAtom);
 
   const isSearchEmpty = watch('search') === '';
 
@@ -27,9 +26,11 @@ export const useSearchRepositoriesForm = () => {
     try {
       setIsSubmitting(true);
       const response = await getUsersByUsername(data.search);
+      console.log('response', response);
       setUsers(response.items);
       setError('');
     } catch (e: any) {
+      console.log('error', e);
       setError(e.message);
     } finally {
       setIsSubmitting(false);

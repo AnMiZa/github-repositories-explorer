@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Repository } from '@/types';
+import { githubApi } from '@/services/api';
+import { extractEndpointFromGithubApiURL } from '@/utils/stringUtils';
 
 export const useGetUserRepositories = (repositoryUrl: string) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -10,7 +12,7 @@ export const useGetUserRepositories = (repositoryUrl: string) => {
     (async () => {
       try {
         setLoading(true);
-        const response = await fetch(repositoryUrl);
+        const response = await githubApi(extractEndpointFromGithubApiURL(repositoryUrl));
         const data = await response.json();
         setRepositories(data);
       } catch (error: any) {
@@ -19,7 +21,7 @@ export const useGetUserRepositories = (repositoryUrl: string) => {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [repositoryUrl]);
 
   return { repositories, loading, error };
 };

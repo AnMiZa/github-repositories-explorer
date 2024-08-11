@@ -1,16 +1,16 @@
 import { Text, StyleSheet, SafeAreaView, View } from 'react-native';
-import { Button, Collapsible, ControlledInput } from '@/components';
+import { Button, ControlledInput } from '@/components';
 import { useSearchRepositoriesForm } from '@/hooks';
 import i18n from '@/lang/i18n';
 import { usersAtom } from '@/state/users';
 import { useAtom } from 'jotai';
-import { RepositoriesList } from '@/components/RepositoriesList';
+import { UsersList } from '@/components/UsersList';
 
 export default function Index() {
   const { control, isSubmitting, submit, reset, error, isSearchEmpty } =
     useSearchRepositoriesForm();
   const [users] = useAtom(usersAtom);
-  console.log('users from jotai', users);
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.screenWrapper}>
@@ -26,12 +26,7 @@ export default function Index() {
           isLoading={isSubmitting}
           isDisabled={isSearchEmpty}
         />
-        {users.map((user) => (
-          <Collapsible
-            title={user.login}
-            children={<RepositoriesList repositoryUrl={user.repos_url} />}
-          />
-        ))}
+        <UsersList users={users} />
       </View>
     </SafeAreaView>
   );
