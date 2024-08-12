@@ -15,14 +15,12 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@backpackapp-io/react-native-toast": "^0.11.0",
     "@expo/vector-icons": "^14.0.2",
-    "@octokit/core": "^6.1.2",
-    "@octokit/rest": "^21.0.1",
     "@react-navigation/native": "^6.0.2",
     "expo": "~51.0.25",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.9",
-    "expo-linking": "~6.3.1",
     "expo-localization": "~15.0.3",
     "expo-router": "~3.5.21",
     "expo-splash-screen": "~0.27.5",
@@ -31,7 +29,6 @@
     "expo-web-browser": "~13.0.3",
     "i18n-js": "^4.4.3",
     "jotai": "^2.9.2",
-    "octokit": "^4.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.52.2",

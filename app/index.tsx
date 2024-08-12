@@ -1,14 +1,12 @@
-import { Text, StyleSheet, SafeAreaView, View } from 'react-native';
-import { Button, ControlledInput } from '@/components';
+import { Text, StyleSheet, SafeAreaView, View, Platform } from 'react-native';
+import { Button, ControlledInput, UsersList, RateLimitChecker } from '@/components';
 import { useSearchRepositoriesForm } from '@/hooks';
 import i18n from '@/lang/i18n';
 import { usersAtom } from '@/state/users';
 import { useAtom } from 'jotai';
-import { UsersList } from '@/components/UsersList';
 
 export default function Index() {
-  const { control, isSubmitting, submit, reset, error, isSearchEmpty } =
-    useSearchRepositoriesForm();
+  const { control, isSubmitting, submit, isSearchEmpty } = useSearchRepositoriesForm();
   const [users] = useAtom(usersAtom);
 
   return (
@@ -28,6 +26,7 @@ export default function Index() {
         />
         <UsersList users={users} />
       </View>
+      <RateLimitChecker />
     </SafeAreaView>
   );
 }
@@ -35,6 +34,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    paddingVertical: Platform.OS === 'android' ? 25 : 0,
   },
   screenWrapper: {
     flex: 1,

@@ -6,6 +6,12 @@
     "noResults": "No results found",
     "searching": "Searching...",
     "searchError": "An error occurred while searching",
-    "userDoNotHaveRepositories": "User do not have any repositories"
+    "userDoNotHaveRepositories": "User do not have any repositories",
+    "remainingRateLimit": "Remaining rate limit:"
+  },
+  "errors": {
+    "failedToFetchRateLimit": "Failed to fetch rate limit",
+    "failedToFetchUsers": "Failed to fetch users",
+    "failedToFetchUserRepository": "Failed to fetch user repository"
   }
 }

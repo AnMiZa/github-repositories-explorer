@@ -1,8 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { getUsersByUsername } from '@/services/repositories';
+import { getUsersByUsername } from '@/services/requests';
 import { useAtom } from 'jotai';
 import { usersAtom } from '@/state/users';
+import { errorToast } from '@/utils/toasts';
+import i18n from '@/lang/i18n';
+import { Keyboard } from 'react-native';
 
 interface SearchRepositoriesFormValues {
   search: string;
@@ -13,7 +16,6 @@ const formDefaultValues = {
 };
 
 export const useSearchRepositoriesForm = () => {
-  const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { control, handleSubmit, reset, watch } = useForm<SearchRepositoriesFormValues>({
     defaultValues: formDefaultValues,
@@ -26,16 +28,14 @@ export const useSearchRepositoriesForm = () => {
     try {
       setIsSubmitting(true);
       const response = await getUsersByUsername(data.search);
-      console.log('response', response);
       setUsers(response.items);
-      setError('');
-    } catch (e: any) {
-      console.log('error', e);
-      setError(e.message);
+    } catch (e) {
+      errorToast(i18n.t('errorMessages.failedToFetchUsers'));
     } finally {
+      Keyboard.dismiss();
       setIsSubmitting(false);
     }
   };
 
-  return { control, submit: handleSubmit(onSubmit), reset, error, isSubmitting, isSearchEmpty };
+  return { control, submit: handleSubmit(onSubmit), reset, isSubmitting, isSearchEmpty };
 };

@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import { UsersListSectionHeader } from '@/components/UsersListSectionHeader';
-import { RepositoriesList } from '@/components/RepositoriesList';
 import { User } from '@/types';
-import { Collapsible } from '@/components/Collapsible';
 import { useEffect, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
+import { HEADER_HEIGHT, UsersListSectionHeader } from './UsersListSectionHeader';
+import { Collapsible } from './Collapsible';
+import { RepositoriesList } from './RepositoriesList';
 
 interface RepositoriesListProps {
   users: User[];
@@ -17,8 +17,7 @@ export function UsersList({ users }: RepositoriesListProps) {
   const [maxCollapsibleHeight, setMaxCollapsibleHeight] = useState(0);
 
   const calculateMaxCollapsibleHeight = (data: User[], containerHeight: number) => {
-    const headerHeight = 40;
-    return containerHeight - data.length * (headerHeight + 16);
+    return containerHeight - data.length * (HEADER_HEIGHT + 16);
   };
 
   useEffect(() => {

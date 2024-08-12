@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -9,6 +8,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+interface CollapsibleProps extends PropsWithChildren {
+  activeSectionIndex: SharedValue<number | null>;
+  sectionIndex: number;
+  maxCollapsibleHeight?: number;
+}
+
 const MAX_HEIGHT = 300;
 
 export function Collapsible({
@@ -16,11 +21,7 @@ export function Collapsible({
   activeSectionIndex,
   sectionIndex,
   maxCollapsibleHeight = MAX_HEIGHT,
-}: PropsWithChildren & {
-  activeSectionIndex: SharedValue<number | null>;
-  sectionIndex: number;
-  maxCollapsibleHeight?: number;
-}) {
+}: CollapsibleProps) {
   const height = useSharedValue(0);
 
   const derivedHeight = useDerivedValue(() =>
@@ -33,34 +34,17 @@ export function Collapsible({
   }));
 
   return (
-    <>
-      <Animated.View
-        style={[styles.animatedView, bodyStyle]}
-        onLayout={(_) => {
-          height.value = maxCollapsibleHeight;
-        }}>
-        <View style={[styles.wrapper, { height: maxCollapsibleHeight }]}>{children}</View>
-      </Animated.View>
-    </>
+    <Animated.View
+      style={[styles.animatedView, bodyStyle]}
+      onLayout={(_) => {
+        height.value = maxCollapsibleHeight;
+      }}>
+      <View style={[styles.wrapper, { height: maxCollapsibleHeight }]}>{children}</View>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  heading: {
-    borderRadius: 6,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    backgroundColor: 'rgba(11,84,116,0.16)',
-    height: 40,
-    marginBottom: 16,
-  },
-  content: {
-    marginTop: 6,
-    marginLeft: 24,
-  },
   animatedView: {
     width: '100%',
     overflow: 'hidden',

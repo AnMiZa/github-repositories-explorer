@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Colors } from '@/constants';
 
 interface UsersListSectionHeaderProps {
   sectionIndex: number;
@@ -8,7 +9,7 @@ interface UsersListSectionHeaderProps {
   activeSectionIndex: SharedValue<number | null>;
 }
 
-const HEADER_HEIGHT = 40;
+export const HEADER_HEIGHT = 40;
 
 export function UsersListSectionHeader({
   title,
@@ -36,7 +37,7 @@ export function UsersListSectionHeader({
   return (
     <TouchableOpacity style={styles.header} onPress={handlePress} activeOpacity={0.8}>
       <Text>{title}</Text>
-      <Animated.View style={[chevronStyle]}>
+      <Animated.View style={chevronStyle}>
         <Ionicons name={'chevron-forward-outline'} size={18} />
       </Animated.View>
     </TouchableOpacity>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    backgroundColor: 'rgba(11,84,116,0.16)',
+    backgroundColor: Colors.primaryOpacity,
     height: HEADER_HEIGHT,
     marginBottom: 16,
   },
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
     position: 'absolute',
-    display: 'flex',
     alignItems: 'center',
   },
 });

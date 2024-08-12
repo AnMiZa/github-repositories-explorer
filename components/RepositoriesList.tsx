@@ -1,9 +1,17 @@
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import { useGetUserRepositories } from '@/hooks/useGetUserRepositories';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import i18n from '@/lang/i18n';
 import { Colors } from '@/constants';
 import { Repository } from '@/types';
+import { ExternalLink } from '@/components/ExternalLink';
 
 interface RepositoriesListProps {
   repositoryUrl: string;
@@ -13,22 +21,24 @@ const ITEM_HEIGHT = 110;
 
 const renderItem = ({ item }: { item: Repository }) => {
   return (
-    <View style={styles.item}>
-      <View style={styles.itemHeader}>
-        <Text style={styles.title} numberOfLines={1}>
-          {item.name}
-        </Text>
-        <View style={styles.starContainer}>
-          <Text>{item.stargazers_count}</Text>
-          <Ionicons name="star" size={16} />
+    <ExternalLink href={item.html_url} asChild>
+      <TouchableOpacity style={styles.item}>
+        <View style={styles.itemHeader}>
+          <Text style={styles.title} numberOfLines={1}>
+            {item.name}
+          </Text>
+          <View style={styles.starContainer}>
+            <Text>{item.stargazers_count}</Text>
+            <Ionicons name="star" size={16} />
+          </View>
         </View>
-      </View>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.description} numberOfLines={3}>
-          {item.description}
-        </Text>
-      </View>
-    </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description} numberOfLines={3}>
+            {item.description}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </ExternalLink>
   );
 };
 
@@ -93,7 +103,6 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    marginRight: 8,
     fontSize: 16,
     fontWeight: 'bold',
   },
